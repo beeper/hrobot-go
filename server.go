@@ -50,8 +50,10 @@ func (c *Client) ServerSetCancellation(ip string, input *models.CancellationSetI
 	url := fmt.Sprintf(c.baseURL+"/server/%s/cancellation", ip)
 
 	formData := neturl.Values{}
+	if input.CancellationReason != "" {
+		formData.Set("cancellation_reason", input.CancellationReason)
+	}
 	formData.Set("cancellation_date", input.CancellationDate)
-	formData.Set("cancellation_reason", input.CancellationReason)
 	formData.Set("reserve_location", strconv.FormatBool(input.ReserveLocation))
 
 	bytes, err := c.doPostFormRequest(url, formData)
