@@ -12,3 +12,9 @@ type Cancellation struct {
 	CancellationDate         string      `json:"cancellation_date"`
 	CancellationReason       interface{} `json:"cancellation_reason"`
 }
+
+type CancellationSetInput struct {
+	CancellationDate   string
+	CancellationReason string
+	ReserveLocation    bool
+}

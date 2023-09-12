@@ -8,10 +8,10 @@ import (
 	"os"
 	"testing"
 
-	client "github.com/nl2go/hrobot-go"
+	client "github.com/beeper/hrobot-go"
 	. "gopkg.in/check.v1"
 
-	"github.com/nl2go/hrobot-go/models"
+	"github.com/beeper/hrobot-go/models"
 )
 
 // Hook up gocheck into the "go test" runner.
@@ -104,7 +104,7 @@ func (s *ClientSuite) TestPostIvalidURL(c *C) {
 
 func (s *ClientSuite) TestGetNonExistentURL(c *C) {
 	robotClient := client.NewBasicAuthClient("user", "pass")
-	robotClient.SetBaseURL("http://DoesNotExist.nl2go")
+	robotClient.SetBaseURL("http://DoesNotExist.beeper")
 
 	_, err := robotClient.ServerGetList()
 	c.Assert(err, Not(IsNil))

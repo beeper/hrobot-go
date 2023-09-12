@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	neturl "net/url"
+	"strconv"
 
-	"github.com/nl2go/hrobot-go/models"
+	"github.com/beeper/hrobot-go/models"
 )
 
 func (c *Client) ServerGetList() ([]models.Server, error) {
@@ -43,6 +44,28 @@ func (c *Client) ServerGet(ip string) (*models.Server, error) {
 	}
 
 	return &serverResp.Server, nil
+}
+
+func (c *Client) ServerSetCancellation(ip string, input *models.CancellationSetInput) (*models.Cancellation, error) {
+	url := fmt.Sprintf(c.baseURL+"/server/%s/cancellation", ip)
+
+	formData := neturl.Values{}
+	formData.Set("cancellation_date", input.CancellationDate)
+	formData.Set("cancellation_reason", input.CancellationReason)
+	formData.Set("reserve_location", strconv.FormatBool(input.ReserveLocation))
+
+	bytes, err := c.doPostFormRequest(url, formData)
+	if err != nil {
+		return nil, err
+	}
+
+	var cancelResp models.CancellationResponse
+	err = json.Unmarshal(bytes, &cancelResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return &cancelResp.Cancellation, nil
 }
 
 func (c *Client) ServerSetName(ip string, input *models.ServerSetNameInput) (*models.Server, error) {
