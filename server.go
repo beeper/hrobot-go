@@ -6,7 +6,7 @@ import (
 	neturl "net/url"
 	"strconv"
 
-	"github.com/nl2go/hrobot-go/models"
+	"github.com/beeper/hrobot-go/models"
 )
 
 func (c *Client) ServerGetList() ([]models.Server, error) {

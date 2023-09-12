@@ -7,9 +7,8 @@ import (
 	"net/http/httptest"
 	"os"
 
+	client "github.com/beeper/hrobot-go"
 	. "gopkg.in/check.v1"
-
-	"github.com/nl2go/hrobot-go"
 )
 
 func (s *ClientSuite) TestIPListSuccess(c *C) {
