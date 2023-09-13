@@ -142,6 +142,11 @@ func (s *ClientSuite) TestServerGetNotFound(c *C) {
 	robotClient.SetBaseURL(ts.URL)
 
 	_, err := robotClient.ServerGet(testServerIP)
+	if err, ok := err.(*models.ErrorClientSide); ok {
+		c.Assert(err.StatusCode, Equals, 404)
+	} else {
+		c.Assert(false, Equals, true)
+	}
 	c.Assert(err, NotNil)
 }
 

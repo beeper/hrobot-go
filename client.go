@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/beeper/hrobot-go/models"
 )
 
 const baseURL string = "https://robot-ws.your-server.de"
@@ -81,6 +83,18 @@ func (c *Client) doRequest(req *http.Request) ([]byte, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+	switch {
+	case resp.StatusCode >= 400 && resp.StatusCode < 500:
+		return nil, &models.ErrorClientSide{
+			StatusCode: resp.StatusCode,
+			Body:       body,
+		}
+	case resp.StatusCode >= 500:
+		return nil, &models.ErrorServerSide{
+			StatusCode: resp.StatusCode,
+			Body:       body,
+		}
 	}
 	if 200 != resp.StatusCode {
 		return nil, fmt.Errorf("%s", body)
