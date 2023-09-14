@@ -135,7 +135,7 @@ func (s *ClientSuite) TestBootRescueSetWithKeySuccess(c *C) {
 
 		body, bodyErr := ioutil.ReadAll(r.Body)
 		c.Assert(bodyErr, IsNil)
-		c.Assert(string(body), Equals, "arch=64&authorized_key=fi%3Ang%3Aer%3Apr%3Ain%3At0%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00&os=linux")
+		c.Assert(string(body), Equals, "arch=64&authorized_key%5B%5D=fi%3Ang%3Aer%3Apr%3Ain%3At0%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00%3A00&os=linux")
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
@@ -157,7 +157,7 @@ func (s *ClientSuite) TestBootRescueSetWithKeySuccess(c *C) {
 	input := &models.RescueSetInput{
 		OS:            "linux",
 		Arch:          64,
-		AuthorizedKey: "fi:ng:er:pr:in:t0:00:00:00:00:00:00:00:00:00:00",
+		AuthorizedKey: []string{"fi:ng:er:pr:in:t0:00:00:00:00:00:00:00:00:00:00"},
 	}
 
 	rescue, err := robotClient.BootRescueSet(testServerIP, input)
