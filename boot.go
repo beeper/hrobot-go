@@ -34,7 +34,12 @@ func (c *Client) BootRescueSet(ip string, input *models.RescueSetInput) (*models
 		formData.Set("arch", strconv.Itoa(input.Arch))
 	}
 	if len(input.AuthorizedKey) > 0 {
-		formData.Set("authorized_key", input.AuthorizedKey)
+		formData.Set("authorized_key[]", input.AuthorizedKey)
+	}
+	for _, key := range input.AuthorizedKeys {
+		if len(key) > 0 {
+			formData.Add("authorized_key[]", key)
+		}
 	}
 
 	bytes, err := c.doPostFormRequest(url, formData)

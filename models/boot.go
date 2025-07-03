@@ -20,7 +20,8 @@ type Rescue struct {
 }
 
 type RescueSetInput struct {
-	OS            string
-	Arch          int
-	AuthorizedKey string
+	OS             string
+	Arch           int
+	AuthorizedKey  string
+	AuthorizedKeys []string
 }
